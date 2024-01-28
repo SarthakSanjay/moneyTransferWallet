@@ -4,13 +4,13 @@ const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = require('../config')
 const registerDetails = zod.object({
     username : zod.string().email(),
-    password: zod.string(),
+    password : zod.string(),
     firstname: zod.string(),
-    lastname:zod.string()
+    lastname : zod.string()
 })
 const loginDetails = zod.object({
-    username: zod.string().email(),
-    password: zod.string()
+    username : zod.string().email(),
+    password : zod.string()
 })
 const registerUser = async(req,res) =>{
     const {username , password ,firstname ,lastname} = req.body
@@ -72,9 +72,29 @@ const loginUser = async(req,res) =>{
     })
 
 }
-
+const updateBody = zod.object({
+    password:zod.string().optional(),
+    firstName:zod.string().optional(),
+    lastName:zod.string().optional(),
+})
 const updateUser = async(req,res) =>{
-    const 
+    const userId = req.userId
+    const {success} = updateBody.safeParse(req.body)
+
+    if(!success){
+        return res.status(411).json(
+            {
+                message: "Error while updating information"
+            }
+        )
+    }
+
+    await User.updateOne(req.body , {_id: userId})
+
+    res.status(200).json({
+        message: "Updated successfully"
+    })
+
 }
 const getUserDetails = async(req,res) =>{
     const user = await User.find()
