@@ -1,4 +1,4 @@
-const User = require('../db')
+const {User, Balance} = require('../db')
 const zod = require('zod')
 const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = require('../config')
@@ -31,10 +31,14 @@ const registerUser = async(req,res) =>{
         firstname:firstname,
         lastname:lastname
     })
-
+    
     const userId= user._id
     const token = jwt.sign({userId} ,JWT_SECRET)
 
+    await Balance.create({
+        userId,
+        balance: 1 + Math.random() * 1000
+    })
     if(!token){
         return res.status(500).json({
             msg:"Internal server error / issue in generating token"
@@ -107,10 +111,32 @@ const getUserDetails = async(req,res) =>{
     })
 }
 const getUser = async(req,res) =>{
-    const user = await User.findOne({username : req.body.username})
+    const user = await User.findOne({_id : req.body.username})
     if(!user) return res.status(404).json({msg:'user not found'})
 
     res.status(200).json({user:user})
 }
 
-module.exports = {registerUser ,getUserDetails , loginUser , getUser}
+const searchUser = async(req,res) =>{
+    const {filter} = req.query
+    let filterValue = zod.string(filter)
+    if(!filterValue){
+        return res.json({})
+    }
+    const user = await User.find({
+        $or:[
+           { firstname: {$regex : filter, $options: 'i' }},
+           { lastname: {$regex : filter, $options: 'i' }},
+        ]
+    }).select("-password")
+    console.log('user',user);
+    if(!user){
+        return res.json({})
+    }
+    res.status(200).json({user:user})
+}
+const deleteAllUser = async(req,res)=>{
+    const deleteUser = await User.deleteMany()
+    res.status(200).json({msg:'deleted all user'})
+}
+module.exports = {registerUser ,getUserDetails , loginUser , getUser,updateUser,searchUser ,deleteAllUser}
