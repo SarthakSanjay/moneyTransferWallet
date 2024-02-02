@@ -23,7 +23,7 @@ const Transactions = () => {
         <span className='w-1/4 text-center'>Date</span>
         <span className='w-1/4 text-center'>Amount</span>
     </div>
-        {transactions.map((transaction)=>{
+        {[...transactions].reverse().map((transaction)=>{
             return <div className='h-18 w-full flex justify-between px-4 my-1 items-center' key={transaction._id}>
                         <span className='w-1/4 text-center font-light text-sm dark:text-[#d8e9a8] hidden md:block'>{transaction._id}</span>
                         <span className='w-1/4 text-center dark:text-[#d8e9a8]'>{capitalizeFirstLetter(transaction.receiver.firstname)} {capitalizeFirstLetter(transaction.receiver.lastname)}</span>
