@@ -1,11 +1,11 @@
 const { default: mongoose } = require('mongoose');
-const {Balance , User} = require('../db')
+const {Balance , User, Transaction} = require('../db')
 const balance = async(req,res)=>{
     try {
         const userId = req.userId
-        console.log("this is userId ",userId);
+        // console.log("this is userId ",userId);
         const account = await Balance.findOne({userId:userId})
-        console.log('account',account);
+        // console.log('account',account);
         if(!account){
             return res.json({})
         }
@@ -80,6 +80,11 @@ const transfer = async(req,res)=>{
     await Balance.updateOne({ userId: userId }, { $inc: { balance: amount } }).session(session);
 
     // Commit the transaction
+     await Transaction.create({
+        sender:req.userId,
+        receiver:userId,
+        amount:amount
+    })
     await session.commitTransaction();
 
     res.json({
