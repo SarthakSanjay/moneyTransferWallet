@@ -13,42 +13,47 @@ const loginDetails = zod.object({
     password : zod.string()
 })
 const registerUser = async(req,res) =>{
-    const {username , password ,firstname ,lastname} = req.body
-    const {success} = registerDetails.safeParse(req.body)
-    if(!success){
-        return res.status(411).json({
-            msg:"Email already taken / Incorrect inputs"
-        })
-    }
-    const existingUser = await User.findOne({username:username})
-    if(existingUser){
-        return res.status(200).json({msg:'user already exist '})
-    }
-
-    const user = await User.create({
-        username:username,
-        password:password,
-        firstname:firstname,
-        lastname:lastname
-    })
+    try {
+        const {username , password ,firstname ,lastname} = req.body
+        // console.log(req.body);
+        const {success} = registerDetails.safeParse(req.body)
+        if(!success){
+            return res.status(411).json({
+                msg:"Email already taken / Incorrect inputs"
+            })
+        }
+        const existingUser = await User.findOne({username:username})
+        if(existingUser){
+            return res.status(409).json({msg:'user already exist '})
+        }
     
-    const userId= user._id
-    const token = jwt.sign({userId} ,JWT_SECRET)
-
-    await Balance.create({
-        userId,
-        balance: 1 + Math.random() * 1000
-    })
-    if(!token){
-        return res.status(500).json({
-            msg:"Internal server error / issue in generating token"
+        const user = await User.create({
+            username:username,
+            password:password,
+            firstname:firstname,
+            lastname:lastname
         })
+        
+        const userId= user._id
+        const token = jwt.sign({userId} ,JWT_SECRET)
+    
+        await Balance.create({
+            userId,
+            balance: 1 + Math.random() * 1000
+        })
+        if(!token){
+            return res.status(500).json({
+                msg:"Internal server error / issue in generating token"
+            })
+        }
+        res.status(201).json({
+            msg:'user registered successfully',
+            user:user,
+            token:token
+        })
+    } catch (error) {
+        console.log(error.message);
     }
-    res.status(201).json({
-        msg:'user registered successfully',
-        user:user,
-        token:token
-    })
 
 }
 const loginUser = async(req,res) =>{
@@ -82,39 +87,57 @@ const updateBody = zod.object({
     lastName:zod.string().optional(),
 })
 const updateUser = async(req,res) =>{
-    const userId = req.userId
-    const {success} = updateBody.safeParse(req.body)
+    try {
+        const userId = req.userId
+        const {success} = updateBody.safeParse(req.body)
+        console.log(req.body);
+        if(!success){
+            return res.status(411).json(
+                {
+                    message: "Error while updating information"
+                }
+            )
+        }
+        const updateObject = {}
 
-    if(!success){
-        return res.status(411).json(
-            {
-                message: "Error while updating information"
-            }
-        )
+        if (req.body.firstname) {
+          updateObject.firstname = req.body.firstname
+        }
+    
+        if (req.body.lastname) {
+          updateObject.lastname = req.body.lastname
+        }
+    
+        if (req.body.username) {
+          updateObject.username = req.body.username
+        }
+        await User.updateOne({_id: userId} , updateObject  )
+    
+        res.status(200).json({
+            message: "Updated successfully"
+        })
+    } catch (error) {
+        console.log(error.message);
     }
-
-    await User.updateOne(req.body , {_id: userId})
-
-    res.status(200).json({
-        message: "Updated successfully"
-    })
 
 }
 const getUserDetails = async(req,res) =>{
-    const user = await User.find()
+    const user = await User.find({ _id: { $ne: req.userId } })
     if(!user){
         return res.status(404).json({msg:'no user'})
     }
+
     res.status(200).json({
         msg:"all user details",
         user:user
     })
 }
 const getUser = async(req,res) =>{
-    const user = await User.findOne({_id : req.body.username})
+    const userId = req.userId
+    const user = await User.findOne({_id : userId })
     if(!user) return res.status(404).json({msg:'user not found'})
 
-    res.status(200).json({user:user})
+    res.status(200).json({user})
 }
 
 const searchUser = async(req,res) =>{
@@ -124,12 +147,18 @@ const searchUser = async(req,res) =>{
         return res.json({})
     }
     const user = await User.find({
-        $or:[
-           { firstname: {$regex : filter, $options: 'i' }},
-           { lastname: {$regex : filter, $options: 'i' }},
+        $and: [
+            {
+                $or: [
+                    { firstname: { $regex: filter, $options: 'i' } },
+                    { lastname: { $regex: filter, $options: 'i' } },
+                ]
+            },
+            { _id: { $ne: req.userId } }
         ]
-    }).select("-password")
-    console.log('user',user);
+    }).select("-password");
+    
+    // console.log('user',user);
     if(!user){
         return res.json({})
     }
