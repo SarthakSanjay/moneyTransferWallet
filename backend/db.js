@@ -1,11 +1,33 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
-const userSchema = mongoose.Schema({
-    username:String,
-    password:String,
-    firstname:String,
-    lastname:String
-})
+const userSchema = new mongoose.Schema({
+  username: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+      minLength: 3,
+      maxLength: 30
+  },
+  password: {
+      type: String,
+      required: true,
+      minLength: 6
+  },
+  firstname: {
+      type: String,
+      required: true,
+      trim: true,
+      maxLength: 50
+  },
+  lastname: {
+      type: String,
+      required: true,
+      trim: true,
+      maxLength: 50
+  }
+});
 const balanceSchema = mongoose.Schema({
   userId: {
     type:mongoose.Schema.Types.ObjectId,
