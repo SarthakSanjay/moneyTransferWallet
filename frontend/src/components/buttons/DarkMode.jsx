@@ -10,7 +10,7 @@ const DarkMode = () => {
   const {theme ,toggleDarkMode} = useDarkMode()
    
   return (
-    <button className='mx-5 border-2 text-xl h-10 w-10 flex justify-center items-center font-semibold rounded-full border-black dark:border-white' onClick={toggleDarkMode}>
+    <button className={`mx-5 border-2 text-xl h-10 w-10 flex justify-center items-center font-semibold rounded-full ${theme === 'dark'?'text-white':'text-black'} border-black dark:border-white`} onClick={toggleDarkMode}>
     {theme === 'dark'  ?<MdOutlineLightMode />: <CiDark /> }
 
 </button>
