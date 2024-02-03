@@ -16,6 +16,21 @@ const balanceSchema = mongoose.Schema({
     default: 0
 }
 })
+
+const transactionSchema = mongoose.Schema({
+  sender:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'User'
+  },
+  receiver: {
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'User'
+  },
+  amount: {
+    type:Number,
+}
+},{timestamps:true})
+
 userSchema.pre('save',async function(next){
     if(!this.isModified("password")) return next()
     this.password =await bcrypt.hash(this.password , 10)
@@ -28,4 +43,5 @@ userSchema.methods.isPassword = async function(password){
 }
 const User = mongoose.model('User' , userSchema)
 const Balance = mongoose.model('Balance' , balanceSchema)
-module.exports = {User , Balance}
+const Transaction = mongoose.model('Transaction' ,transactionSchema)
+module.exports = {User , Balance ,Transaction}
