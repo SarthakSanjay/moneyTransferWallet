@@ -1,9 +1,10 @@
+import Dashboard from "./pages/Dashboard"
 
 function App() {
 
   return (
-    <div>
-        Hello world
+    <div className="h-screen w-screen dark:bg-[#191a19]">
+      <Dashboard />
     </div>
   )
 }
