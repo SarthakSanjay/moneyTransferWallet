@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { IoSettingsOutline} from "react-icons/io5";
 import { MdOutlineAccountBalance } from "react-icons/md";
-import { TbLogout2 } from "react-icons/tb";
 import { FiHelpCircle } from "react-icons/fi";
 import { removeAllCookies } from '../../utils/usefullFuncitons';
 import { useNavigate } from 'react-router-dom';
@@ -35,7 +34,7 @@ const Profile = ({showProfile , user}) => {
     <div className={` ${showProfile? 'h-1/2 w-1/2 md:w-1/4  py-10 px-4 ':'w-0 h-0 p-0'} transition-all duration-500 ease-in-out absolute top-24 right-0 mx-2 rounded-lg  text-white bg-blue-900/80 dark:bg-emerald-800/80
     flex justify-center items-start flex-col text-2xl z-10`}>
     {logoutModal ? 
-    <LogoutModal  setLogoutModal={setLogoutModal} logout={logout} />
+    <LogoutModal  setLogoutModal={setLogoutModal} logout={logout} showProfile={showProfile} />
      : ''}
     {showProfile ? <>
          
@@ -46,7 +45,6 @@ const Profile = ({showProfile , user}) => {
         <ProfileButtons icon={<FiHelpCircle />} check={'help'} text={"Help"} setSelected={setSelected}/>
 
        <LogoutBtn setLogoutModal={setLogoutModal} logoutModal={logoutModal} />
-
         
     </> : ''}
         
