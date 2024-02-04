@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { capitalizeFirstLetter } from '../utils/usefullFuncitons'
+import DarkMode from '../components/buttons/DarkMode'
 const Send = () => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
@@ -31,16 +32,17 @@ const Send = () => {
         })
     }
   return (
-    <div className='h-screen w-screen  bg-white dark:bg-[#191a19] flex justify-center items-center'>
+    <div className='h-screen w-screen  bg-black/20 dark:bg-[#191a19] flex justify-center items-center'>
+    <div className='absolute top-10 '><DarkMode /></div>
     {displayMessage ? <div className='absolute top-10 bg-green-300 h-10 w-1/6 rounded-md border border-green-950  flex items-center px-2'>{message}</div> :''}
-        <div className='shadow-md rounded-lg h-1/2 w-2/5 p-2 border flex justify-between flex-col dark:border-emerald-500 dark:bg-emerald-600/10'>
-        <h1 className='font-semibold h-1/4 text-center text-2xl mt-6 dark:text-[#d8e9a8] '>Send Money</h1>
+        <div className='shadow-md rounded-lg bg-white h-1/2 w-2/5 p-2 border flex justify-between flex-col dark:border-emerald-500 dark:bg-emerald-600/10'>
+        <h1 className='font-semibold h-1/4 text-center text-black text-2xl mt-6 dark:text-[#d8e9a8] '>Send Money</h1>
         <div className=' h-3/4 my-10'>
-            <div className='flex gap-4 items-center p-2 text-2xl font-semibold text-white'>
+            <div className='flex gap-4 items-center p-2 text-2xl font-semibold text-black dark:text-white'>
                 <div className='h-14 w-14 bg-green-500 flex justify-center items-center rounded-full text-2xl text-white'>{name.charAt(0).toUpperCase()}</div>
                 <h1>{capitalizeFirstLetter(name)}</h1>
             </div>
-            <p className='px-3 font-medium text-white'>Amount (in Rs)</p>
+            <p className='px-3 font-medium text-black dark:text-white'>Amount (in Rs)</p>
             <input onChange={handleAmount} type='number'  className='h-10 w-full outline-none border px-3 my-2 rounded-md dark:bg-emerald-500/20 dark:border-emerald-500 dark:text-white' placeholder='Enter Amount'/>
             <button onClick={handleClick} className='h-10  w-full bg-green-500 text-white rounded-md'>Initiate Transfer</button>
             <button onClick={()=>{
