@@ -1,5 +1,5 @@
 const express = require('express')
-const { registerUser, getUserDetails ,loginUser, getUser, updateUser,searchUser, deleteAllUser } = require('../controllers/user')
+const { registerUser, getUserDetails ,loginUser, getUser, updateUser,searchUser, deleteAllUser, deleteUser } = require('../controllers/user')
 const { authMiddlware } = require('../middleware/authMiddleware')
 const { getTransaction, deleteAll, getUserTransactions } = require('../controllers/transaction')
 const router = express.Router()
@@ -12,4 +12,5 @@ router.route('/update').put(authMiddlware,updateUser)
 router.route('/bulk').get(authMiddlware,searchUser)
 router.route('/transaction').get(authMiddlware,getUserTransactions)
 router.route('/transaction/all').delete(deleteAll).get(getTransaction)
+router.route('/deactivate').delete(authMiddlware , deleteUser)
 module.exports = router
