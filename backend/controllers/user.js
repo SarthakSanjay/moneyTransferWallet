@@ -164,8 +164,17 @@ const searchUser = async(req,res) =>{
     }
     res.status(200).json({user:user})
 }
+const deleteUser = async(req,res) =>{
+   try {
+     const userId = req.userId
+     await User.deleteOne({_id:userId})
+     res.status(200).json({'msg' : 'user deleted'})
+   } catch (error) {
+    console.log(error.message)
+   }
+}
 const deleteAllUser = async(req,res)=>{
     const deleteUser = await User.deleteMany()
     res.status(200).json({msg:'deleted all user'})
 }
-module.exports = {registerUser ,getUserDetails , loginUser , getUser,updateUser,searchUser ,deleteAllUser}
+module.exports = {registerUser ,getUserDetails , loginUser , getUser,updateUser,searchUser ,deleteAllUser , deleteUser}
