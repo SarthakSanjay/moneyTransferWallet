@@ -27,7 +27,7 @@ const Transactions = () => {
             return <div className='h-18 w-full flex justify-between px-4 my-1 items-center' key={transaction._id}>
                         <span className='w-1/4 text-center font-light text-sm dark:text-[#d8e9a8] hidden md:block'>{transaction._id}</span>
                         <span className='w-1/4 text-center dark:text-[#d8e9a8]'>{capitalizeFirstLetter(transaction.receiver.firstname)} {capitalizeFirstLetter(transaction.receiver.lastname)}</span>
-                        <span className='w-1/4 text-center text-emerald-700 dark:text-emerald-500 '>send</span>
+                        <span className='w-1/4 text-center text-emerald-700 dark:text-emerald-500 '>sent</span>
                         <span className='w-1/4 text-center dark:text-white '>{new Date(transaction.createdAt).toLocaleDateString()}</span>
                         <span className='w-1/4 text-center dark:text-orange-500'>${transaction.amount}</span>
                     </div>
