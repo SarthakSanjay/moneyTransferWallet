@@ -45,14 +45,15 @@ const Users = () => {
 
   return (
     <div className='h-max  w-full flex flex-col-reverse  md:flex-row '>
-    <div className='h-1/2 w-full md:w-1/2 px-4 font-semibold'>
+    <div className='h-full md:h-5/6  w-full md:w-1/2 px-4 font-semibold'>
         <input onChange={handleSearch} className='border h-10 w-full outline-none px-2 my-2 rounded-md dark:bg-inherit dark:text-white dark:border-emerald-500' placeholder='Search users...'/>
-        {users.map((user)=>{
-            return <div className='h-18 w-full flex justify-between px-4 my-1 items-center dark:text-[#d8e9a8]' key={user._id}>
-                <div className='flex gap-2 items-center'>
-                    <div className='bg-[#e2e8f0] flex justify-center items-center rounded-full h-14 w-14 dark:text-black dark:bg-lime-600' >{user.firstname.charAt(0).toUpperCase()}</div>
-                    <h1>{capitalizeFirstLetter(user.firstname)} {capitalizeFirstLetter(user.lastname)}</h1>
-                </div>
+        <div className='h-96 overflow-x-scroll w-full font-semibold'>
+            {users.map((user)=>{
+                return <div className='h-18 w-full flex justify-between px-4 my-1 items-center dark:text-[#d8e9a8]' key={user._id}>
+                    <div className='flex gap-2 items-center'>
+                        <div className='bg-[#e2e8f0] flex justify-center items-center rounded-full h-14 w-14 dark:text-black dark:bg-lime-600' >{user.firstname.charAt(0).toUpperCase()}</div>
+                        <h1>{capitalizeFirstLetter(user.firstname)} {capitalizeFirstLetter(user.lastname)}</h1>
+                    </div>
 
                 <button
                 onClick={()=>{
@@ -67,6 +68,7 @@ const Users = () => {
             </div>
         })}
 
+    </div>
     </div>
         <Recent />
     </div>
