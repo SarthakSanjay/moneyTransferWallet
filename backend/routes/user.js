@@ -13,5 +13,5 @@ router.route('/bulk').get(authMiddlware,searchUser)
 router.route('/transaction').get(authMiddlware,getUserTransactions)
 router.route('/transaction/all').delete(deleteAll).get(getTransaction)
 router.route('/deactivate').delete(authMiddlware , deleteUser)
-router.route('/public/all').get(getUser)
+router.route('/public/all').get(getUserDetails)
 module.exports = router
