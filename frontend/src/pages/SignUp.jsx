@@ -37,7 +37,7 @@ const SignUp = () => {
           .then(res =>{
             Cookies.set('token',res.data.token)
             if(res.status === 201){
-                navigate('/dashboard')
+                navigate('/dashboard/users')
             }
           }).catch((error) => console.log(error.message))
     }
