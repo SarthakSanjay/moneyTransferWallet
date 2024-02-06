@@ -30,7 +30,7 @@ const SignUp = () => {
             firstname:firstName,
             lastname:lastName,
             password:password
-          })
+          }, { withCredentials: true })
           .then(res =>{
             Cookies.set('token',res.data.token)
             if(res.status === 201){
