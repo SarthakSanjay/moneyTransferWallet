@@ -16,7 +16,7 @@ import Test from './pages/Test.jsx';
 
 const router = createBrowserRouter([
  {
-  path:"/" , element : <Test />
+  path:"/" , element : <SignUp />
  },
   {
     path:"/signup" , element: <SignUp />
