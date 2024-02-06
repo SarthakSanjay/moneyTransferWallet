@@ -26,7 +26,7 @@ const SignIn = () => {
         }).then(res =>{
             Cookies.set('token',res.data.token)
             if(res.status === 200){
-                navigate('/dashboard')
+                navigate('/dashboard/users')
             }
         })
     }
