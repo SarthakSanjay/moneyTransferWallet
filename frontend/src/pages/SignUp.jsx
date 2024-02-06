@@ -25,8 +25,8 @@ const SignUp = () => {
     }
     const handleClick = () =>{
       axios.defaults.withCredentials = true
-      const api = 'https://money-transfer-wallet-backend-pdsa1jg3s-sarthaksanjay.vercel.app'
-       axios.post(`${api}/api/v1/user/register`,{
+
+       axios.post(`${apiBaseURL}/api/v1/user/register`,{
             username:email,
             firstname:firstName,
             lastname:lastName,
