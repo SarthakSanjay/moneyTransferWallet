@@ -9,7 +9,7 @@ app.use(express.json())
 app.use('/api/v1' , mainRouter)
 
 app.get('/',(req,res)=>{
-    res.send('hello')
+    res.status(200).json({msg:'hello from backend'})
 })
 async function startServer(){
     try {
