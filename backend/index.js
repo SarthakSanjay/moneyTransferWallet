@@ -5,7 +5,7 @@ const app = express()
 const mainRouter = require('./routes/index')
 const mongoose = require('mongoose')
 app.use(cors({
-    origin: '*',
+    origin: 'https://money-transfer-wallet-frontend.vercel.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials:true,
 }))
