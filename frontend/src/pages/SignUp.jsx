@@ -24,13 +24,16 @@ const SignUp = () => {
         setPassword(e.target.value)
     }
     const handleClick = () =>{
+      axios.defaults.withCredentials = true
       const api = 'https://money-transfer-wallet-backend-pdsa1jg3s-sarthaksanjay.vercel.app'
        axios.post(`${api}/api/v1/user/register`,{
             username:email,
             firstname:firstName,
             lastname:lastName,
             password:password
-          }, { withCredentials: true })
+          }
+          // , { withCredentials: true }
+          )
           .then(res =>{
             Cookies.set('token',res.data.token)
             if(res.status === 201){
