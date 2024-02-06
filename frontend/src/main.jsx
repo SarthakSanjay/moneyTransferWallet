@@ -12,11 +12,12 @@ import SignIn from './pages/SignIn.jsx';
 import Send from './pages/Send.jsx';
 import Users from './components/Users.jsx';
 import Transactions from './components/Transactions.jsx';
+import Test from './pages/Test.jsx';
 
 const router = createBrowserRouter([
-  {
-    path:"/" , element: <App />
-  },
+ {
+  path:"/" , element : <Test />
+ },
   {
     path:"/signup" , element: <SignUp />
   },

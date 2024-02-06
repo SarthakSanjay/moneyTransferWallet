@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Recent from './recent/Recent'
 import { capitalizeFirstLetter } from '../utils/usefullFuncitons'
+import { apiBaseURL } from '../constant'
 
 
 const Users = () => {
@@ -13,7 +14,7 @@ const Users = () => {
     function useDebounce(value){
         useEffect(()=>{
           let d =setTimeout(() => {
-            axios.get(`http://localhost:3000/api/v1/user/bulk?filter=${value}`,{
+            axios.get(`${apiBaseURL}/api/v1/user/bulk?filter=${value}`,{
                 headers:{
                     'Authorization' : `Bearer ${Cookies.get('token')}`
                 }
@@ -29,7 +30,7 @@ const Users = () => {
       }
       useDebounce(input)
     useEffect(()=>{
-        axios.get('http://localhost:3000/api/v1/user/all',{
+        axios.get(`${apiBaseURL}/api/v1/user/all`,{
             headers:{
                 'Authorization' : `Bearer ${Cookies.get('token')}`
             }

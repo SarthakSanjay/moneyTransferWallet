@@ -2,11 +2,12 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import React, { useEffect, useState } from 'react'
 import { capitalizeFirstLetter } from '../utils/usefullFuncitons'
+import { apiBaseURL } from '../constant'
 
 const Transactions = () => {
     const [transactions , setTransactions] = useState([])
     useEffect(()=>{
-        axios.get(`http://localhost:3000/api/v1/user/transaction`,{
+        axios.get(`${apiBaseURL}/api/v1/user/transaction`,{
             headers:{
                 'Authorization': `Bearer ${Cookies.get('token')}`
             }

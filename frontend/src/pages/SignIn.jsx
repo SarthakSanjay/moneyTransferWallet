@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import DarkMode from '../components/buttons/DarkMode'
+import { apiBaseURL } from '../constant'
 const SignIn = () => {
     const [email , setEmail] = useState('')
     const [password , setPassword] = useState('')
@@ -19,7 +20,7 @@ const SignIn = () => {
     }
     const handleClick = () =>{
         // console.log(firstName , lastName , email)
-        axios.post('http://localhost:3000/api/v1/user/login',{
+        axios.post(`${apiBaseURL}/api/v1/user/login`,{
             username: email,
             password: password
         }).then(res =>{

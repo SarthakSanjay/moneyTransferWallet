@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { GrEdit } from 'react-icons/gr'
 import { RxCross2 } from "react-icons/rx";
 import { useNavigate } from 'react-router-dom';
+import { apiBaseURL } from '../../constant';
 const EditableFields = ({user , label , save , setSave,fieldToUpdate , setIsDisabled }) => {
     const [edit , setEdit] = useState(false)
     const [inputValue , setInputValue] = useState('')
@@ -24,7 +25,7 @@ const EditableFields = ({user , label , save , setSave,fieldToUpdate , setIsDisa
         }
     }
     const updateFields = (value) =>{
-        axios.put('http://localhost:3000/api/v1/user/update',
+        axios.put(`${apiBaseURL}/api/v1/user/update`,
             checkField(fieldToUpdate ,value),
         {
           headers:{

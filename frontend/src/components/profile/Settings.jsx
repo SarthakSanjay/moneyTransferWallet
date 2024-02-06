@@ -8,11 +8,12 @@ import { MdOutlineLightMode } from 'react-icons/md'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
+import { apiBaseURL } from '../../constant'
 const Settings = ({showProfile ,setSelected}) => {
     const { theme , toggleDarkMode } = useDarkMode()
     const navigate = useNavigate()
     const deactivateAcc = () =>{
-      axios.delete('http://localhost:3000/api/v1/user/deactivate',{
+      axios.delete(`${apiBaseURL}/api/v1/user/deactivate`,{
         headers:{
           'Authorization': `Bearer ${Cookies.get('token')}`
         }

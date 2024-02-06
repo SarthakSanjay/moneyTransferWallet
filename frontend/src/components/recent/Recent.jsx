@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import RecentLoader from '../../loaders/RecentLoader';
 import RecentSquare from './RecentSquare';
 import { useNavigate } from 'react-router-dom';
+import { apiBaseURL } from '../../constant';
 
 const Recent = () => {
     const [transactions , setTransactions] = useState([])
@@ -11,7 +12,7 @@ const Recent = () => {
     const navigate = useNavigate()
     useEffect(()=>{
       setTimeout(()=>{
-        axios.get(`http://localhost:3000/api/v1/user/transaction`,{
+        axios.get(`${apiBaseURL}/api/v1/user/transaction`,{
             headers:{
                 'Authorization': `Bearer ${Cookies.get('token')}`
             }

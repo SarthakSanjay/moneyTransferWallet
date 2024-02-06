@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { capitalizeFirstLetter } from '../utils/usefullFuncitons'
 import DarkMode from '../components/buttons/DarkMode'
 import Modal from '../components/Modal'
+import { apiBaseURL } from '../constant'
 const Send = () => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
@@ -25,7 +26,7 @@ const Send = () => {
             setCheckEmpty(true)
             return
         }
-        axios.post('http://localhost:3000/api/v1/account/transfer',{
+        axios.post(`${apiBaseURL}/api/v1/account/transfer`,{
             userId: userId,
             amount: amount
         },{headers:{

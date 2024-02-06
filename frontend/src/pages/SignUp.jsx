@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import DarkMode from '../components/buttons/DarkMode'
+import { apiBaseURL } from '../constant'
 const SignUp = () => {
     const [firstName , setFirstName] = useState('')
     const [lastName , setLastName] = useState('')
@@ -23,7 +24,8 @@ const SignUp = () => {
         setPassword(e.target.value)
     }
     const handleClick = () =>{
-       axios.post('http://localhost:3000/api/v1/user/register',{
+      const api = 'https://money-transfer-wallet-backend-pdsa1jg3s-sarthaksanjay.vercel.app'
+       axios.post(`${api}/api/v1/user/register`,{
             username:email,
             firstname:firstName,
             lastname:lastName,
