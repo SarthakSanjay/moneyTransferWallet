@@ -4,7 +4,7 @@ const cors = require('cors')
 const app = express()
 const mainRouter = require('./routes/index')
 const mongoose = require('mongoose')
-app.use(cors())
+app.use(cors({credentials:true}))
 app.use(express.json())
 app.use('/api/v1' , mainRouter)
 
