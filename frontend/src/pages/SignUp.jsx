@@ -39,7 +39,7 @@ const SignUp = () => {
             if(res.status === 201){
                 navigate('/dashboard')
             }
-          })
+          }).catch((error) => console.log(error.message))
     }
   return (
     <div className=' h-screen w-screen flex justify-center items-center dark:bg-[#191a19] bg-black/40'>
